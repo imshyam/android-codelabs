@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         filter.addAction(Intent.ACTION_POWER_CONNECTED);
         filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        filter.addAction(Intent.ACTION_HEADSET_PLUG);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(customReceiver, new IntentFilter(ACTION_CUSTOM_BROADCAST));
 
