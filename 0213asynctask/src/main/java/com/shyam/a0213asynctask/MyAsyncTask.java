@@ -1,6 +1,7 @@
 package com.shyam.a0213asynctask;
 
 import android.os.AsyncTask;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
@@ -8,11 +9,12 @@ import java.util.Random;
 
 public class MyAsyncTask extends AsyncTask<Void, Integer, String> {
 
-    private WeakReference<TextView> viewWeakReference, progressText;
+    private WeakReference<TextView> viewWeakReference;
+    private WeakReference<ProgressBar> progressBar;
 
-    public MyAsyncTask(TextView textView, TextView progressTextView) {
+    public MyAsyncTask(TextView textView, ProgressBar progressTextView) {
         viewWeakReference = new WeakReference<>(textView);
-        progressText = new WeakReference<>(progressTextView);
+        progressBar = new WeakReference<>(progressTextView);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class MyAsyncTask extends AsyncTask<Void, Integer, String> {
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
-        progressText.get().setText("Complete: " + values[0]);
+        progressBar.get().setProgress(values[0]);
     }
 
     @Override
