@@ -6,12 +6,13 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 import java.util.Random;
 
-public class MyAsyncTask extends AsyncTask<Void, Void, String> {
+public class MyAsyncTask extends AsyncTask<Void, Integer, String> {
 
-    private WeakReference<TextView> viewWeakReference;
+    private WeakReference<TextView> viewWeakReference, progressText;
 
-    public MyAsyncTask(TextView textView) {
+    public MyAsyncTask(TextView textView, TextView progressTextView) {
         viewWeakReference = new WeakReference<>(textView);
+        progressText = new WeakReference<>(progressTextView);
     }
 
     @Override
@@ -23,18 +24,21 @@ public class MyAsyncTask extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... voids) {
         Random r = new Random();
         int n = r.nextInt(11);
-        int s = n * 200;
         try {
-            Thread.sleep(s);
+            for (int i = 0; i < n; i++) {
+                Thread.sleep(200);
+                publishProgress( (int) (((i + 1) / (float) n) * 100));
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return "Awake at last after sleeping for " + s + " milliseconds!";
+        return "Awake at last after sleeping for " + (n * 200) + " milliseconds!";
     }
 
     @Override
-    protected void onProgressUpdate(Void... values) {
+    protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
+        progressText.get().setText("Complete: " + values[0]);
     }
 
     @Override

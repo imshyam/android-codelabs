@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textView;
+    private TextView textView, progressText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,9 +15,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView = findViewById(R.id.textView);
+        progressText = findViewById(R.id.textView2);
     }
 
     public void startAsync(View view) {
-        new MyAsyncTask(textView).execute();
+        new MyAsyncTask(textView, progressText).execute();
     }
 }
