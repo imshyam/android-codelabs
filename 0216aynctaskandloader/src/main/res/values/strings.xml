@@ -3,4 +3,5 @@
     <string name="info">Enter a book name to find out who wrote the book.</string>
     <string name="hint">Book Title</string>
     <string name="book_search">Search Books</string>
+    <string name="no_result">No Result Found</string>
 </resources>
