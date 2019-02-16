@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,16 +15,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.shyam.a0216notifications.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
 
     private final static String PRIMARY_CHANNEL_ID = "primary_notification_channel";
     private static final int NOTIFICATION_ID = 0;
     private NotificationManager notificationManager;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        updateVisibility(true, false, false);
+    }
+
+    void updateVisibility(boolean notify, boolean cancel, boolean update) {
+        binding.setVisibleNotify(notify);
+        binding.setVisibleCancel(cancel);
+        binding.setVisibleUpdate(update);
     }
 
     void createNotificationChannel() {
@@ -61,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
         NotificationCompat.Builder builder = getNotificationBuilder();
         notificationManager.notify(NOTIFICATION_ID, builder.build());
+        updateVisibility(false, true, true);
 
     }
 
@@ -71,9 +83,11 @@ public class MainActivity extends AppCompatActivity {
                 .BigPictureStyle().bigPicture(bitmap)
                 .setBigContentTitle("Notification Updated!"));
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
+        updateVisibility(false, true, false);
     }
 
     public void cancelNotification(View view) {
         notificationManager.cancel(NOTIFICATION_ID);
+        updateVisibility(true, false, false);
     }
 }
