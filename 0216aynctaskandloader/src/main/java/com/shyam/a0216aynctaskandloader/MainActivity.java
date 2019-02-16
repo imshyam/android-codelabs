@@ -1,6 +1,8 @@
 package com.shyam.a0216aynctaskandloader;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,8 +31,20 @@ public class MainActivity extends AppCompatActivity {
         if (inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
-        new FetchBook(title, author).execute(queryString);
-        title.setText(R.string.loading);
-        author.setText("");
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager == null ? null : connectivityManager.getActiveNetworkInfo();
+
+        if(queryString.length() == 0) {
+            title.setText(R.string.empty_query);
+            author.setText("");
+        } else if(networkInfo == null || !networkInfo.isConnected()) {
+            title.setText(R.string.no_network);
+            author.setText("");
+        } else {
+            new FetchBook(title, author).execute(queryString);
+            title.setText(R.string.loading);
+            author.setText("");
+        }
     }
 }
