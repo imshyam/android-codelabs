@@ -1,8 +1,10 @@
 package com.shyam.a0216aynctaskandloader;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void searchBooks(View view) {
         String queryString = editTextQuery.getText().toString();
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
         new FetchBook(title, author).execute(queryString);
+        title.setText(R.string.loading);
+        author.setText("");
     }
 }
