@@ -24,7 +24,7 @@ public class NetworkUtils {
     static String getBooks(String query) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-        String response = null;
+        String response = "";
 
         try {
             Uri uri = Uri.parse(BOOK_BASE_URL).buildUpon()
