@@ -61,4 +61,11 @@ public class MainActivity extends AppCompatActivity {
         notificationManager.notify(NOTIFICATION_ID, builder.build());
 
     }
+
+    public void updateNotification(View view) {
+    }
+
+    public void cancelNotification(View view) {
+        notificationManager.cancel(NOTIFICATION_ID);
+    }
 }
