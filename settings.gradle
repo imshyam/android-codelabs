@@ -1,1 +1,1 @@
-include ':app', ':0212broadcastreceiver', ':0213asynctask', ':0216aynctaskandloader'
+include ':app', ':0212broadcastreceiver', ':0213asynctask', ':0216aynctaskandloader', ':0216notifications'
