@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(NotificationReceiver.ACTION_NOTIFICATION_UPDATE);
+        filter.addAction(NotificationReceiver.ACTION_NOTIFICATION_CANCEL);
         notificationReceiver = new NotificationReceiver();
         this.registerReceiver(notificationReceiver, filter);
 
@@ -64,12 +65,15 @@ public class MainActivity extends AppCompatActivity {
                 NOTIFICATION_ID,
                 notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent userCancelIntent = new Intent(NotificationReceiver.ACTION_NOTIFICATION_CANCEL);
+        PendingIntent cancelPI = PendingIntent.getBroadcast(this, NOTIFICATION_ID, userCancelIntent, PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, PRIMARY_CHANNEL_ID)
                 .setContentTitle("You've been notified.")
                 .setContentText("This is your notification text.")
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
+                .setDeleteIntent(cancelPI)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_ALL);
         return notificationBuilder;
@@ -103,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
         updateVisibility(false, true, false);
     }
     public void cancelNotification(View view) {
+        cancel();
+    }
+    void cancel() {
         notificationManager.cancel(NOTIFICATION_ID);
         updateVisibility(true, false, false);
     }
