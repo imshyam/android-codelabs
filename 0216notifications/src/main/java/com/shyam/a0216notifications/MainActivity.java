@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         Intent userCancelIntent = new Intent(NotificationReceiver.ACTION_NOTIFICATION_CANCEL);
         PendingIntent cancelPI = PendingIntent.getBroadcast(this, NOTIFICATION_ID, userCancelIntent, PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, PRIMARY_CHANNEL_ID)
-                .setContentTitle("You've been notified.")
+                .setContentTitle("5 new Emails.")
                 .setContentText("This is your notification text.")
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pendingIntent)
@@ -89,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
                 notificationIntent,
                 PendingIntent.FLAG_ONE_SHOT);
         builder.addAction(R.drawable.ic_update, "Update", pendingIntent);
+        builder.setStyle(new NotificationCompat.InboxStyle()
+                .addLine("This is msg one.")
+                .addLine("This is second msg.")
+                .addLine("Message no. 3")
+                .setBigContentTitle("This is title")
+                .setSummaryText("+2 more")
+        );
         notificationManager.notify(NOTIFICATION_ID, builder.build());
         updateVisibility(false, true, true);
 
