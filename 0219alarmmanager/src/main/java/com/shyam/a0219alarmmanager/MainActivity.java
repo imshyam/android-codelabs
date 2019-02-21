@@ -35,12 +35,12 @@ public class MainActivity extends AppCompatActivity {
         Intent notifyIntent = new Intent(this, AlarmReceiver.class);
         notifyPendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        boolean alarmUp = (PendingIntent.getBroadcast(this, NOTIFICATION_ID, notifyIntent,
-                PendingIntent.FLAG_NO_CREATE) != null);
-
+        boolean alarmUp = (PendingIntent.getBroadcast(this, NOTIFICATION_ID,
+                notifyIntent, PendingIntent.FLAG_NO_CREATE) != null);
         binding.setChecked(alarmUp);
+
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
     }
 
@@ -71,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
             }
             toastMsg = "Alarm On";
         } else {
-            alarmManager.cancel(notifyPendingIntent);
+            notificationManager.cancelAll();
+            if (alarmManager != null && notificationManager != null) {
+                alarmManager.cancel(notifyPendingIntent);
+            }
             toastMsg = "Alarm Off";
         }
         Toast.makeText(this, toastMsg, Toast.LENGTH_SHORT).show();
