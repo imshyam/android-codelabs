@@ -1,1 +1,1 @@
-include ':app', ':0212broadcastreceiver', ':0213asynctask', ':0216aynctaskandloader', ':0216notifications', ':0219alarmmanager'
+include ':app', ':0212broadcastreceiver', ':0213asynctask', ':0216aynctaskandloader', ':0216notifications', ':0219alarmmanager', ':0222jobscheduler'
