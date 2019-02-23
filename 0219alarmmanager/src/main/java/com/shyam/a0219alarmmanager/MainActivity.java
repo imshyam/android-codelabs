@@ -81,6 +81,19 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, toastMsg, Toast.LENGTH_SHORT).show();
     }
 
+    public void onTimedAlarmChange(CompoundButton button, Boolean isChecked) {
+        String toastMsg;
+        if(isChecked) {
+            if(alarmManager != null) {
+
+            }
+            toastMsg = "Exact Time Alarm On";
+        } else {
+            toastMsg = "Exact Time Alarm Off";
+        }
+        Toast.makeText(this, toastMsg, Toast.LENGTH_SHORT).show();
+    }
+
     public void getNextAlarm(View view) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP && alarmManager.getNextAlarmClock() != null) {
             long time = alarmManager.getNextAlarmClock().getTriggerTime();
