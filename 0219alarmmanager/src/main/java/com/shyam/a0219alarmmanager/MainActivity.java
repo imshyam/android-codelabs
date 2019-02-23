@@ -4,18 +4,19 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.shyam.a0219alarmmanager.databinding.ActivityMainBinding;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,5 +79,17 @@ public class MainActivity extends AppCompatActivity {
             toastMsg = "Alarm Off";
         }
         Toast.makeText(this, toastMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    public void getNextAlarm(View view) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP && alarmManager.getNextAlarmClock() != null) {
+            long time = alarmManager.getNextAlarmClock().getTriggerTime();
+            Date date = new Date(time);
+            Toast.makeText(this, date.toString(), Toast.LENGTH_SHORT).show();
+        } else if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP && alarmManager.getNextAlarmClock() == null) {
+            Toast.makeText(this, "No Alarm Available.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Only after lollipop.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
